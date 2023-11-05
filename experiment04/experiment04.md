@@ -1,6 +1,5 @@
 # 实验四 Python字典和while循环
 
-
 班级：21计科04
 
 学号：B20210305114
@@ -10,7 +9,6 @@
 Github地址: [PythonStudy](https://github.com/basicecho/PythonStudy)
 
 ---
-
 
 ## 实验目的
 
@@ -43,7 +41,6 @@ Python列表操作
 
 ---
 
-
 #### 第一题：淘气还是乖孩子（Naughty or Nice）
 
 难度： 7kyu
@@ -68,6 +65,16 @@ Python列表操作
 你的函数应该返回 "Naughty!"或 "Nice!"，这取决于在某一年发生的总次数（以较大者为准）。如果两者相等，则返回 "Nice！"。
 代码提交地址：
 [https://www.codewars.com/kata/5662b14e0a1fb8320a00005c](https://www.codewars.com/kata/5662b14e0a1fb8320a00005c)
+
+```python
+def spin_words(sentence):  
+    words = sentence.split()  
+    for i in range(len(words)):  
+        if len(words[i]) >= 5:  
+            words[i] = words[i][::-1]  
+    sentence = ' '.join(words)  
+    return sentence
+```
 
 ---
 
@@ -103,6 +110,16 @@ Python列表操作
 侦探，我们就靠你了!
 代码提交地址：
 [https://www.codewars.com/kata/5263c6999e0f40dee200059d](https://www.codewars.com/kata/5263c6999e0f40dee200059d)
+
+```python
+from itertools import product
+
+ADJACENTS = ("08", "124", "2135", "326", "4157", "52468", "6359", "748", "85790", "968")
+
+
+def get_pins(observed):
+    return ["".join(p) for p in product(*(ADJACENTS[int(d)] for d in observed))]
+```
 
 ---
 
@@ -177,6 +194,21 @@ Amino Acid Dictionary
 代码提交地址：
 [https://www.codewars.com/kata/555a03f259e2d1788c000077](https://www.codewars.com/kata/555a03f259e2d1788c000077)
 
+```python
+import collections
+
+
+def is_pangram(sentence):
+    sentence = sentence.lower()  # 将句子转换为小写
+    sentence = "".join(c for c in sentence if c.isalpha())  # 仅保留字母字符
+    print(sentence)
+    # 使用 collections.Counter 统计每个字母出现的次数
+    counter = collections.Counter(sentence)
+    # 检查是否有26个不同的字母
+    return len(counter) == 26
+
+```
+
 ---
 
 #### 第四题： 填写订单（Thinkful - Dictionary drills: Order filler）
@@ -191,6 +223,21 @@ Amino Acid Dictionary
 
 代码提交地址：
 [https://www.codewars.com/kata/586ee462d0982081bf001f07/python](https://www.codewars.com/kata/586ee462d0982081bf001f07/python)
+
+```python
+def fillable(stock, merch, n):
+    # 将商品字符串转换为商品列表
+    merch_list = merch.split()
+
+    # 检查每个商品是否在库存中
+    for item in merch_list:
+        if item not in stock or stock[item] < n:
+            return False
+
+    # 如果所有商品都有足够的库存，返回True
+    return True
+
+```
 
 ---
 
@@ -297,8 +344,58 @@ $    ···–··–
 代码提交地址：
 [https://www.codewars.com/kata/decode-the-morse-code-advanced](https://www.codewars.com/kata/decode-the-morse-code-advanced)
 
----
+```python
+def decodeBits(bits):
+    bits = bits.strip("0")
+    unit = 0
+    for bit in bits:
+        if bit != "0":
+            unit += 1
+        else:
+            break
+    #unit now might be 1 unit or 3 units
+    count = 1
+    for i in range(1,len(bits)):
+        if bits[i] == bits[i-1]:
+            count += 1
+        else:
+            if count < unit:
+                unit = count
+                count = 1
+            else:
+                count = 1
+    morse_code = ""
+  
+    words = bits.split("0"*7*unit)
+    for word in words:
+        characters = word.split("0"*3*unit)
+        for character in characters:
+            signs = character.split("0"*unit)
+            for sign in signs:
+                if sign == "1"*3*unit:
+                    morse_code += "-"
+                else:
+                    morse_code += "."
+            morse_code += " "
+        morse_code += "   "
+    return morse_code
+        
 
+
+def decodeMorse(morse_code):
+    morse_code.strip()
+    result = ""
+    characters = morse_code.split(" ")
+    for character in characters:
+        if character != "":
+            result += MORSE_CODE[character]
+        else:
+            result += " "
+    return ' '.join(result.split())
+
+```
+
+---
 
 ### 第三部分
 
