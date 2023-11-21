@@ -70,11 +70,11 @@ lst1 = [
 [代码提交地址](https://www.codewars.com/kata/coding-meetup-number-1-higher-order-functions-series-count-the-number-of-javascript-developers-coming-from-europe)
 
 ```python
-def count_developers(lst):  
-    count = 0  
-    for item in lst:  
-        if item['continent'] == 'Europe' and item['language'] == 'JavaScript':  
-            count += 1  
+def count_developers(lst):
+    count = 0  # 初始化计数器
+    for developer in lst:
+        if developer['continent'] == 'Europe' and developer['language'] == 'JavaScript':
+            count += 1
     return count
 ```
 
@@ -110,6 +110,50 @@ eight(divided_by(three()))
 代码提交地址：
 [https://www.codewars.com/kata/525f3eda17c7cd9f9e000b39](https://www.codewars.com/kata/525f3eda17c7cd9f9e000b39)
 
+```python
+def zero(operation=None):
+    return 0 if operation is None else operation(0)
+
+def one(operation=None):
+    return 1 if operation is None else operation(1)
+
+def two(operation=None):
+    return 2 if operation is None else operation(2)
+
+def three(operation=None):
+    return 3 if operation is None else operation(3)
+
+def four(operation=None):
+    return 4 if operation is None else operation(4)
+
+def five(operation=None):
+    return 5 if operation is None else operation(5)
+
+def six(operation=None):
+    return 6 if operation is None else operation(6)
+
+def seven(operation=None):
+    return 7 if operation is None else operation(7)
+
+def eight(operation=None):
+    return 8 if operation is None else operation(8)
+
+def nine(operation=None):
+    return 9 if operation is None else operation(9)
+
+def plus(y):
+    return lambda x: x + y
+
+def minus(y):
+    return lambda x: x - y
+
+def times(y):
+    return lambda x: x * y
+
+def divided_by(y):
+    return lambda x: x // y
+```
+
 ---
 
 #### 第三题： 缩短数值的过滤器(Number Shortening Filter)
@@ -133,6 +177,26 @@ filter2('pippi') == 'pippi'
 
 代码提交地址：
 [https://www.codewars.com/kata/56b4af8ac6167012ec00006f](https://www.codewars.com/kata/56b4af8ac6167012ec00006f)
+
+```python
+def shorten_number(suffixes, base):
+    def inner(input_value):
+        if isinstance(input_value, int):
+            num = input_value
+        elif isinstance(input_value, str):
+            try:
+                num = int(input_value)
+            except ValueError:
+                return str(input_value)
+        else:
+            return str(input_value)
+
+        for i in range(len(suffixes) - 1, -1, -1):
+            if num >= (base ** i):
+                return str(num // (base ** i)) + suffixes[i]
+        return str(input_value)
+    return inner
+```
 
 ---
 
@@ -170,6 +234,21 @@ list1 = [
 
 代码提交地址：
 [https://www.codewars.com/kata/582887f7d04efdaae3000090](https://www.codewars.com/kata/582887f7d04efdaae3000090)
+
+```python
+def find_senior(lst):
+    max_age = -1  # 初始的最大年龄
+    senior_developers = []
+
+    for developer in lst:
+        if developer['age'] > max_age:
+            max_age = developer['age']
+            senior_developers = [developer]
+        elif developer['age'] == max_age:
+            senior_developers.append(developer)
+
+    return senior_developers
+```
 
 ---
 
@@ -306,9 +385,10 @@ curryPartial(curryPartial(curryPartial(add, 1)), 2, 3) # =>6
 
 使用Markdown语法绘制你的程序绘制程序流程图（至少一个），Markdown代码如下：
 
-![程序流程图](/Experiments/img/2023-08-05-22-00-00.png)
+![程序流程图](images/a.png)
 
 显示效果如下：
+![](images/b.png)
 
 ```mermaid
 flowchart LR
@@ -333,8 +413,6 @@ flowchart LR
 
 注意代码需要使用markdown的代码块格式化，例如Git命令行语句应该使用下面的格式：
 
-![Git命令](/Experiments/img/2023-07-26-22-48.png)
-
 显示效果如下：
 
 ```bash
@@ -345,8 +423,6 @@ git commit -m "first commit"
 ```
 
 如果是Python代码，应该使用下面代码块格式，例如：
-
-![Python代码](/Experiments/img/2023-07-26-22-52-20.png)
 
 显示效果如下：
 
@@ -364,9 +440,28 @@ def add_binary(a,b):
 请使用自己的语言并使用尽量简短代码示例回答下面的问题，这些问题将在实验检查时用于提问和答辩以及实际的操作。
 
 1. 什么是函数式编程范式？
+
+  - 函数式编程范式是一种编程范式，它强调使用纯函数来构建程序，其中函数是不可变的、无副作用的、可组合的，且对同样的输入始终产生相同的输出。函数式编程侧重于将问题分解为小的、可组合的函数，以提高代码的可维护性和可读性，并通过避免共享状态和可变数据来减少程序中的错误。
+
 2. 什么是lambda函数？请举例说明。
+
+- Lambda函数是一种匿名函数，它是一种临时创建的小函数，通常用于函数式编程中。Lambda函数通常用于简单的操作，如映射、筛选和排序。以下是一个示例：
+
+```python
+# Lambda函数用于对列表元素进行平方操作
+numbers = [1, 2, 3, 4, 5]
+squared_numbers = list(map(lambda x: x ** 2, numbers))
+print(squared_numbers)  # 输出 [1, 4, 9, 16, 25]
+```
+
 3. 什么是高阶函数？常用的高阶函数有哪些？这些高阶函数如何工作？使用简单的代码示例说明。
+
+- 高阶函数是函数式编程中的一种概念，它可以接受其他函数作为参数或返回函数作为结果。常见的高阶函数包括 map、filter 和 reduce。
 
 ## 实验总结
 
 总结一下这次实验你学习和使用到的知识，例如：编程工具的使用、数据结构、程序语言的语法、算法、编程技巧、编程思想。
+
+程序语言的语法：我掌握了Python编程语言的基本语法，如变量声明、条件语句、循环语句等。
+算法：我掌握了冒泡排序算法、插入排序算法、快速排序算法等基本的排序算法，以及列表的逆序操作。
+编程技巧：我掌握了列表的基本操作，以及如何使用循环和条件语句实现算法。
